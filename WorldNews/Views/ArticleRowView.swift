@@ -54,6 +54,7 @@ struct ArticleRowView: View {
                 
                 HStack (alignment: .center, spacing: 16) {
                     Text(article.captionText)
+                        .lineLimit(1)
                         .foregroundColor(.secondary)
                         .font(.caption)
                     Spacer()
@@ -68,7 +69,7 @@ struct ArticleRowView: View {
                     
                     Button {
                         //Action
-                        
+                        presentShareSheet(url: article.articleURL)
                     } label: {
                         Image(systemName: "square.and.arrow.up")
                     }
