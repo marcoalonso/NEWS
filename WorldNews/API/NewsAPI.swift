@@ -8,6 +8,7 @@
 import Foundation
 
 struct NewsAPI {
+    //SINGLETON solo permite crear un unica instancia de este NewsAPI
     static let shared = NewsAPI()
     private init() { }
     
@@ -19,6 +20,8 @@ struct NewsAPI {
         return decoder
     }()
     
+    
+    //Fetch the data and return an array of articles
     func fetch(from category: Category) async throws -> [Article] {
         let url = generateNewsURL(from: category)
         let (data, response) = try await session.data(from: url)
@@ -45,7 +48,7 @@ struct NewsAPI {
             NSError(domain: "NewsAPI", code: code, userInfo: [NSLocalizedDescriptionKey: description])
         }
         
-    
+    //This function returns a url valid dependig of each category
     private func generateNewsURL(from category: Category) -> URL {
         var url = "https://newsapi.org/v2/top-headlines?"
         url += "apiKey=\(apiKey)"
