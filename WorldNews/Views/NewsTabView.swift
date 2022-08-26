@@ -15,6 +15,7 @@ struct NewsTabView: View {
     var body: some View {
         NavigationView {
             ArticleListView(articles: articles)
+                .overlay(overlayView)
                 .onAppear{
                     async {
                         //necesitamos que busque y cambie la fase
@@ -24,6 +25,27 @@ struct NewsTabView: View {
                 .navigationTitle(articleNewsVM.selectedCategory.text)
         }
     }
+    
+    @ViewBuilder
+    private var overlayView: some View {
+        switch articleNewsVM.phase {
+        case .empty:
+            ProgressView()
+            
+        case .success(let articles) where articles.isEmpty:
+            EmptyPlaceholderView(text: "No Articles available", image: nil)
+            
+        case .failure(let error):
+             RetryView(text: error.localizedDescription) {
+                //TODO: Refresh the news API
+            }
+        default:
+            EmptyView()
+        }
+    }
+    
+    
+    
     
     //Esta funcion determina si la fase es .success, returna el array de articles
     private var articles: [Article] {
