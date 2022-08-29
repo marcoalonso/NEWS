@@ -16,14 +16,16 @@ struct NewsTabView: View {
         NavigationView {
             ArticleListView(articles: articles)
                 .overlay(overlayView)
-            
-                .refreshable {
-                    loadTask()
-                }
-                .onAppear{
-                   loadTask()
-                }
-                .navigationTitle(articleNewsVM.selectedCategory.text)
+                .task(id: articleNewsVM.fetchTaskToken, loadTask)
+                .refreshable(action: refreshTask)
+//                .onAppear{
+//                   loadTask()
+//                }
+//                .onChange(of: articleNewsVM.selectedCategory) { _ in
+//                 loadTask()
+//                }
+                .navigationTitle(articleNewsVM.fetchTaskToken.category.text)
+                .navigationBarItems(trailing: menu)
         }
     }
     
@@ -37,10 +39,7 @@ struct NewsTabView: View {
             EmptyPlaceholderView(text: "No Articles available", image: nil)
             
         case .failure(let error):
-             RetryView(text: error.localizedDescription) {
-                //TODO: Refresh the news API
-                 loadTask()
-            }
+             RetryView(text: error.localizedDescription, retryAction: refreshTask)
         default:
             EmptyView()
         }
@@ -58,16 +57,35 @@ struct NewsTabView: View {
         }
     }
     
-    private func loadTask(){
-        async {
-            await articleNewsVM.loadArticles()
+    private func loadTask() async {
+        await articleNewsVM.loadArticles()
+    }
+    
+    private func refreshTask() {
+        articleNewsVM.fetchTaskToken = FetchTaskToken(category: articleNewsVM.fetchTaskToken.category, token: .now)
+    }
+    
+    private var menu: some View {
+        Menu {
+            Picker("Category", selection: $articleNewsVM.fetchTaskToken.category) {
+                ForEach(Category.allCases) {
+                    Text($0.text).tag($0)
+                }
+            }
+        } label: {
+            Image(systemName: "fiberchannel")
+                .imageScale(.large)
         }
     }
     
 }
 
 struct NewsTabView_Previews: PreviewProvider {
+    
+    @StateObject static var articleBookmarkVM = ArticleBookmarkViewModel()
+    
     static var previews: some View {
         NewsTabView(articleNewsVM: ArticleNewsViewModel(articles: Article.previewData))
+            .environmentObject(articleBookmarkVM)
     }
 }

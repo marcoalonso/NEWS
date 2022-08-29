@@ -13,6 +13,11 @@ enum DataFetchPhase<T> {
     case failure(Error)
 }
 
+struct FetchTaskToken: Equatable {
+    var category: Category
+    var token: Date
+}
+
 @MainActor //all state mutations will be in the main threat its similar to DispatchQueue
 //it will be an observable object to say the view if it need be upgraded
 class ArticleNewsViewModel: ObservableObject {
@@ -20,7 +25,7 @@ class ArticleNewsViewModel: ObservableObject {
     //By default is .empty and only will be .succes once the data will be ready
     @Published var phase = DataFetchPhase<[Article]>.empty
     
-    @Published var selectedCategory: Category
+    @Published var fetchTaskToken: FetchTaskToken
     private let newsAPI = NewsAPI.shared //Singleton Instance
     
     init(articles: [Article]? = nil, selectedCategory: Category = .general) {
@@ -32,19 +37,25 @@ class ArticleNewsViewModel: ObservableObject {
         } else {
             self.phase = .empty
         }
-        self.selectedCategory = selectedCategory
+        self.fetchTaskToken = FetchTaskToken(category: selectedCategory, token: Date())
     }
     
     //actualiza la fase con los articulos listos
     func loadArticles() async {
-        phase = .empty //this will clean the UI
+        phase = .success(Article.previewData)
+//        if Task.isCancelled { return }
+//        phase = .empty //this will clean the UI
         
-        do {
-            let articles = try await newsAPI.fetch(from: selectedCategory)
-            phase = .success(articles)
-        } catch  {
-            phase = .failure(error)
-        }
+//        do {
+//            let articles = try await newsAPI.fetch(from: fetchTaskToken.category)
+//            if Task.isCancelled { return }
+//            phase = .success(articles)
+//        } catch  {
+//            if Task.isCancelled { return }
+//            print(error.localizedDescription)
+//            phase = .failure(error)
+//
+//        }
     }
     
     
