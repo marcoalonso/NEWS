@@ -16,11 +16,12 @@ struct NewsTabView: View {
         NavigationView {
             ArticleListView(articles: articles)
                 .overlay(overlayView)
+            
+                .refreshable {
+                    loadTask()
+                }
                 .onAppear{
-                    async {
-                        //necesitamos que busque y cambie la fase
-                        await articleNewsVM.loadArticles()
-                    }
+                   loadTask()
                 }
                 .navigationTitle(articleNewsVM.selectedCategory.text)
         }
@@ -38,6 +39,7 @@ struct NewsTabView: View {
         case .failure(let error):
              RetryView(text: error.localizedDescription) {
                 //TODO: Refresh the news API
+                 loadTask()
             }
         default:
             EmptyView()
@@ -53,6 +55,12 @@ struct NewsTabView: View {
             return articles
         } else {
             return []
+        }
+    }
+    
+    private func loadTask(){
+        async {
+            await articleNewsVM.loadArticles()
         }
     }
     
