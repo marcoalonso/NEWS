@@ -3,7 +3,7 @@
 //  WorldNews
 //
 //  Created by marco rodriguez on 24/08/22.
-// https://www.youtube.com/watch?v=LRnbFjq0bTM continue at 1:47:00 -> Save Bookmark locally
+// https://www.youtube.com/watch?v=LRnbFjq0bTM continue at 2:21:00 -> Suggestions
  
 import Foundation
 
@@ -23,7 +23,24 @@ struct NewsAPI {
     
     //Fetch the data and return an array of articles
     func fetch(from category: Category) async throws -> [Article] {
-        let url = generateNewsURL(from: category)
+        try await fetchArticles(from: generateNewsURL(from: category))
+    }
+    
+    func search(for query: String) async throws -> [Article] {
+        try await fetchArticles(from: generateSearchURL(from: query))
+    }
+    
+    private func generateSearchURL(from query: String) -> URL {
+        let percenencodeString = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
+        var url = "https://newsapi.org/v2/everything?"
+        url += "apiKey=\(apiKey)"
+        url += "&language=es"
+        url += "&q=\(percenencodeString)"
+        return URL(string: url)!
+    }
+    
+    private func fetchArticles(from url: URL) async throws -> [Article] {
+        
         let (data, response) = try await session.data(from: url)
         
         guard let response = response as? HTTPURLResponse else {
@@ -44,6 +61,7 @@ struct NewsAPI {
             throw generateError(description: "An server error occured")
         }
     }
+    
         private func generateError(code: Int = 1, description: String) -> Error {
             NSError(domain: "NewsAPI", code: code, userInfo: [NSLocalizedDescriptionKey: description])
         }
