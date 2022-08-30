@@ -3,7 +3,7 @@
 //  WorldNews
 //
 //  Created by marco rodriguez on 24/08/22.
-// https://www.youtube.com/watch?v=LRnbFjq0bTM continue at 1:21:00 -> Pull to refresh
+// https://www.youtube.com/watch?v=LRnbFjq0bTM continue at 1:47:00 -> Save Bookmark locally
  
 import Foundation
 

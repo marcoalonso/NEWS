@@ -42,20 +42,24 @@ class ArticleNewsViewModel: ObservableObject {
     
     //actualiza la fase con los articulos listos
     func loadArticles() async {
-        phase = .success(Article.previewData)
-//        if Task.isCancelled { return }
-//        phase = .empty //this will clean the UI
+//        phase = .success(Article.previewData) //Mockup
         
-//        do {
-//            let articles = try await newsAPI.fetch(from: fetchTaskToken.category)
-//            if Task.isCancelled { return }
-//            phase = .success(articles)
-//        } catch  {
-//            if Task.isCancelled { return }
-//            print(error.localizedDescription)
-//            phase = .failure(error)
-//
-//        }
+        // MARK: - ********** For Dummy Data **********
+        if Task.isCancelled { return }
+        phase = .empty //this will clean the UI
+        
+        do {
+            let articles = try await newsAPI.fetch(from: fetchTaskToken.category)
+            if Task.isCancelled { return }
+            phase = .success(articles)
+        } catch  {
+            if Task.isCancelled { return }
+            print(error.localizedDescription)
+            phase = .failure(error)
+
+        }
+        // MARK: - ********** For Dummy Data **********
+        
     }
     
     

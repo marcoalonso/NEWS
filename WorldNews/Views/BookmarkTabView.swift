@@ -28,7 +28,11 @@ struct BookmarkTabView: View {
 }
 
 struct BookmarkTabView_Previews: PreviewProvider {
+    
+//    @StateObject static var articleBookmarkVM = ArticleBookmarkViewModel().shared
+    
     static var previews: some View {
         BookmarkTabView()
+            //.environmentObject(articleBookmarkVM)
     }
 }
