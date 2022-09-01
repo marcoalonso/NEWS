@@ -19,6 +19,11 @@ struct ContentView: View {
                     Label("Search", systemImage: "magnifyingglass")
                 }
             
+            ComingSoonView()
+                .tabItem {
+                    Label("Coming Soon", systemImage: "cloud.sun.fill")
+                }
+            
             BookmarkTabView()
                 .tabItem {
                     Label("Saved", systemImage: "bookmark")

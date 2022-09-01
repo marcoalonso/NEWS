@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6009509A28C04C84004A078F /* ComingSoonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6009509928C04C84004A078F /* ComingSoonView.swift */; };
 		60101AD528B6745400B4217F /* WorldNewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60101AD428B6745400B4217F /* WorldNewsApp.swift */; };
 		60101AD728B6745400B4217F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60101AD628B6745400B4217F /* ContentView.swift */; };
 		60101AD928B6745600B4217F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60101AD828B6745600B4217F /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6009509928C04C84004A078F /* ComingSoonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComingSoonView.swift; sourceTree = "<group>"; };
 		60101AD128B6745400B4217F /* WorldNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorldNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60101AD428B6745400B4217F /* WorldNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldNewsApp.swift; sourceTree = "<group>"; };
 		60101AD628B6745400B4217F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				60DED09428BD24E600879719 /* BookmarkTabView.swift */,
 				604F792B28BE6AD500EB8CEF /* SearchTabView.swift */,
 				60A9107128C041B300168AB7 /* SearchHistoryListView.swift */,
+				6009509928C04C84004A078F /* ComingSoonView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -232,6 +235,7 @@
 				6039544C28B92B8800D2C239 /* EmptyPlaceholderView.swift in Sources */,
 				60101AED28B67C0100B4217F /* ArticleRowView.swift in Sources */,
 				60A9107228C041B300168AB7 /* SearchHistoryListView.swift in Sources */,
+				6009509A28C04C84004A078F /* ComingSoonView.swift in Sources */,
 				6039544E28B92C1500D2C239 /* RetryView.swift in Sources */,
 				60101AD528B6745400B4217F /* WorldNewsApp.swift in Sources */,
 				60101AEA28B67B0E00B4217F /* NewsAPIResponse.swift in Sources */,
