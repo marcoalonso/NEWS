@@ -18,7 +18,7 @@ struct SearchTabView: View {
                 
                 .navigationTitle("Search")
         }
-        .searchable(text: $searchVM.searchQuery)
+        .searchable(text: $searchVM.searchQuery) { suggestionsView }
         .onChange(of: searchVM.searchQuery) { newValue in
             if newValue.isEmpty {
                 searchVM.phase = .empty
@@ -52,6 +52,17 @@ struct SearchTabView: View {
             RetryView(text: error.localizedDescription, retryAction: search)
             
         default: EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    private var suggestionsView: some View {
+        ForEach(["SWIFT", "COVID-19", "BTC", "PS5", "GLOBAL WARMING", "IOS 15", "IPHONE 14", "PANDEMIC","ELON MUSK","APPLE", "META"], id: \.self) { text in
+            Button {
+                searchVM.searchQuery = text
+            } label: {
+                Text(text)
+            }
         }
     }
     

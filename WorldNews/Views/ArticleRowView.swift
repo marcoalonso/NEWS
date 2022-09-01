@@ -15,7 +15,7 @@ struct ArticleRowView: View {
     let article: Article
     
     var body: some View {
-        VStack (alignment: .leading, spacing: 16) {
+        VStack (alignment: .leading, spacing: 8) {
             AsyncImage(url: article.imageURL) { phase in
                 switch phase {
                 case .empty:
@@ -29,6 +29,7 @@ struct ArticleRowView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
+                        
                     
                 case .failure:
                     HStack {
@@ -46,6 +47,7 @@ struct ArticleRowView: View {
             .frame(minHeight: 200, maxHeight: 300)
             .background(Color.gray.opacity(0.3))
             .clipped()
+            .cornerRadius(12)
             
             VStack (alignment: .leading, spacing: 8) {
                 Text(article.title)
@@ -81,6 +83,7 @@ struct ArticleRowView: View {
             }
             .padding([.horizontal, .bottom])
         }
+        .shadow(radius: 6)
     }
     
     private func toogleBookmark(for article: Article) {
@@ -109,7 +112,7 @@ struct ArticleRowView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             List {
-                ArticleRowView(article: .previewData[0])
+                ArticleRowView(article: .previewData[2])
                     .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
             }
             .listStyle(.plain)
