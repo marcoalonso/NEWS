@@ -45,7 +45,7 @@ struct SearchHistoryListView: View {
 
 struct SearchHistoryListView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchHistoryListView(searchVM: ArticleSearchViewModel()) { _ in 
+        SearchHistoryListView(searchVM: ArticleSearchViewModel.shared) { _ in 
             
         }
     }
