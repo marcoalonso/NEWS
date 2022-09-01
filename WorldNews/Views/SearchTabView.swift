@@ -41,6 +41,10 @@ struct SearchTabView: View {
         case .empty:
             if !searchVM.searchQuery.isEmpty {
                 ProgressView()
+            } else if !searchVM.history.isEmpty {
+                SearchHistoryListView(searchVM: searchVM) { newValue in
+                    searchVM.searchQuery = newValue
+                }
             } else {
                 EmptyPlaceholderView(text: "Type your query to search from WorldNews", image: Image(systemName: "magnifyingglass"))
             }
@@ -67,6 +71,11 @@ struct SearchTabView: View {
     }
     
     private func search() {
+        let searchQuery = searchVM.searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !searchQuery.isEmpty {
+            searchVM.addHistory(searchQuery)
+        }
+        
         async {
             await searchVM.searchArticle()
         }
